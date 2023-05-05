@@ -11,24 +11,24 @@ import axios from "axios";
 export default function Advice() {
   const [data, setData] = useState(null);
 
-  useEffect(() => {
-    const getApi = (async () => {
-      const response = await axios.get("https://api.adviceslip.com/advice");
-      const info = response.data;
+  const getData = async () => {
+    const response = await axios.get("https://api.adviceslip.com/advice");
+    const info = response.data;
+    setData(info);
+  };
 
-      setData(info);
-      console.log(info);
-    })();
+  useEffect(() => {
+    getData();
   }, []);
 
   return (
     <>
       <Container>
         <AdviceId>ADVICE #{data?.slip.id}</AdviceId>
-        <AdviceTxt></AdviceTxt>
+        <AdviceTxt>{data?.slip.advice}</AdviceTxt>
         <Divider src="./images/pattern-divider-mobile.svg" />
       </Container>
-      <DiceButt>
+      <DiceButt onClick={getData}>
         <img src="./images/icon-dice.svg" />
       </DiceButt>
     </>
